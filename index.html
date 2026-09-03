@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Voting</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="header">
+            <h1>🗳️ Voting</h1>
+            <p>Silakan pilih salah satu pilihan</p>
+        </div>
+
+
+        <!-- LOGIN PEMILIH -->
+
+        <section id="loginSection" class="card">
+
+            <h2>Masuk Voting</h2>
+
+            <p class="description">
+                Masukkan kode pemilih yang telah diberikan.
+            </p>
+
+            <input
+                type="text"
+                id="kode"
+                placeholder="Contoh: VOTE001"
+                autocomplete="off"
+            >
+
+            <button onclick="cekKode()">
+                Mulai Voting
+            </button>
+
+            <p id="loginMessage" class="message"></p>
+
+        </section>
+
+
+        <!-- HALAMAN VOTING -->
+
+        <section id="votingSection" class="hidden">
+
+            <div class="card">
+
+                <h2>Pilih Pilihan</h2>
+
+                <p>
+                    Kode:
+                    <strong id="kodeTampil"></strong>
+                </p>
+
+                <label for="nama">
+                    Nama <span>(opsional)</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="nama"
+                    placeholder="Boleh dikosongkan"
+                    maxlength="100"
+                >
+
+
+                <div id="candidates" class="candidates">
+                    <!-- Kandidat akan dimasukkan melalui JavaScript -->
+                </div>
+
+
+                <button
+                    id="voteButton"
+                    onclick="kirimVote()"
+                    disabled
+                >
+                    VOTE
+                </button>
+
+                <p id="voteMessage" class="message"></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- HASIL -->
+
+        <a href="hasil.html" class="result-link">
+            Lihat Hasil Voting
+        </a>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

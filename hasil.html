@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hasil Voting</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <div class="header">
+
+        <h1>📊 Hasil Voting</h1>
+
+        <p>
+            Perolehan suara saat ini
+        </p>
+
+    </div>
+
+
+    <section class="card">
+
+        <div
+            id="results"
+            class="results"
+        >
+            Memuat hasil...
+        </div>
+
+
+        <div
+            id="total"
+            class="total"
+        >
+        </div>
+
+    </section>
+
+
+    <a
+        href="index.html"
+        class="result-link"
+    >
+        ← Kembali ke Voting
+    </a>
+
+</main>
+
+
+<script>
+
+const API_URL =
+    "https://script.google.com/macros/s/AKfycbwQcyiGUnVjIveJ6LEpxF8y7RyryMGUZUz7gVpfbMm1hO0k_cGSYi9BfatPynDCccHB/exec";
+
+
+async function loadResults() {
+
+    const container =
+        document.getElementById("results");
+
+    const totalElement =
+        document.getElementById("total");
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "?action=results"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.status !== "success") {
+
+            container.innerHTML =
+                "<p>Gagal mengambil hasil.</p>";
+
+            return;
+        }
+
+
+        const results =
+            data.results;
+
+
+        let totalSuara = 0;
+
+
+        results.forEach(item => {
+
+            totalSuara +=
+                Number(item.suara);
+
+        });
+
+
+        container.innerHTML = "";
+
+
+        results.forEach(item => {
+
+            const suara =
+                Number(item.suara);
+
+
+            const persen =
+                totalSuara > 0
+                ? (suara / totalSuara * 100)
+                    .toFixed(1)
+                : 0;
+
+
+            const itemElement =
+                document.createElement("div");
+
+
+            itemElement.className =
+                "result-item";
+
+
+            itemElement.innerHTML = `
+
+                <div class="result-header">
+
+                    <strong>
+                        Kandidat #${item.id}
+                    </strong>
+
+                    <span>
+                        ${suara} suara
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width:${persen}%"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="percentage">
+
+                    ${persen}%
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                itemElement
+            );
+
+        });
+
+
+        totalElement.innerHTML = `
+
+            Total suara:
+
+            <strong>
+                ${totalSuara}
+            </strong>
+
+        `;
+
+
+    } catch (error) {
+
+        container.innerHTML =
+            "<p>Gagal terhubung ke server.</p>";
+
+        console.error(error);
+
+    }
+
+}
+
+
+loadResults();
+
+</script>
+
+</body>
+
+</html>
