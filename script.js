@@ -1,323 +1,169 @@
-// ======================================
-// URL GOOGLE APPS SCRIPT
-// ======================================
+// GANTI bagian ini dengan URL Web App Google Apps Script kamu.
+const API_URL = "https://script.google.com/macros/s/AKfycbwQcyiGUnVjIveJ6LEpxF8y7RyryMGUZUz7gVpfbMm1hO0k_cGSYi9BfatPynDCccHB/exec";
 
-const API_URL =
-    "https://script.google.com/macros/s/AKfycbwQcyiGUnVjIveJ6LEpxF8y7RyryMGUZUz7gVpfbMm1hO0k_cGSYi9BfatPynDCccHB/exec";
+const nameSearch = document.getElementById("nameSearch");
+const searchResults = document.getElementById("searchResults");
+const selectedVoterBox = document.getElementById("selectedVoter");
+const designSection = document.getElementById("designSection");
+const designGrid = document.getElementById("designGrid");
+const voteButton = document.getElementById("voteButton");
+const message = document.getElementById("message");
+const modal = document.getElementById("modal");
+const confirmText = document.getElementById("confirmText");
 
+let selectedVoter = null;
+let selectedDesign = null;
+let searchTimer = null;
 
-// ======================================
-// DATA SEMENTARA
-// ======================================
+nameSearch.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  selectedVoter = null;
+  selectedDesign = null;
+  selectedVoterBox.classList.add("hidden");
+  designSection.classList.add("hidden");
+  voteButton.disabled = true;
+  searchResults.innerHTML = "";
 
-let kodePemilih = "";
-let kandidatTerpilih = "";
+  const q = nameSearch.value.trim();
+  if (q.length < 2) return;
 
+  searchTimer = setTimeout(() => searchVoters(q), 250);
+});
 
-// ======================================
-// CEK KODE PEMILIH
-// ======================================
+async function searchVoters(q) {
+  searchResults.innerHTML = "<div class='hint'>Mencari...</div>";
 
-async function cekKode() {
+  try {
+    const res = await fetch(`${API_URL}?action=cari&q=${encodeURIComponent(q)}`);
+    const data = await res.json();
 
-    const kodeInput =
-        document.getElementById("kode");
+    if (!data.success) throw new Error(data.message || "Pencarian gagal.");
 
-    const message =
-        document.getElementById("loginMessage");
-
-    const kode =
-        kodeInput.value.trim();
-
-
-    if (!kode) {
-
-        message.textContent =
-            "Masukkan kode pemilih.";
-
-        return;
+    if (!data.voters.length) {
+      searchResults.innerHTML = "<div class='hint'>Nama tidak ditemukan.</div>";
+      return;
     }
 
+    searchResults.innerHTML = data.voters.map(v => `
+      <button class="name-option" data-nama="${escapeAttr(v.nama)}" data-kelas="${escapeAttr(v.kelas)}">
+        <strong>${escapeHtml(v.nama)}</strong>
+        <span>${escapeHtml(v.kelas)}</span>
+      </button>
+    `).join("");
 
-    message.textContent =
-        "Memeriksa kode...";
-
-
-    try {
-
-        const response = await fetch(
-            API_URL +
-            "?action=check&kode=" +
-            encodeURIComponent(kode)
-        );
-
-
-        const data =
-            await response.json();
-
-
-        if (data.status === "success") {
-
-            kodePemilih = kode;
-
-            document
-                .getElementById("loginSection")
-                .classList.add("hidden");
-
-
-            document
-                .getElementById("votingSection")
-                .classList.remove("hidden");
-
-
-            document
-                .getElementById("kodeTampil")
-                .textContent = kode;
-
-
-            loadCandidates();
-
-        } else {
-
-            message.textContent =
-                data.message;
-
-        }
-
-
-    } catch (error) {
-
-        message.textContent =
-            "Gagal terhubung ke server.";
-
-        console.error(error);
-
-    }
+    document.querySelectorAll(".name-option").forEach(btn => {
+      btn.addEventListener("click", () => {
+        selectedVoter = {
+          nama: btn.dataset.nama,
+          kelas: btn.dataset.kelas
+        };
+        nameSearch.value = selectedVoter.nama;
+        searchResults.innerHTML = "";
+        selectedVoterBox.textContent =
+          `✓ ${selectedVoter.nama} — ${selectedVoter.kelas}`;
+        selectedVoterBox.classList.remove("hidden");
+        loadDesigns();
+      });
+    });
+  } catch (err) {
+    searchResults.innerHTML = `<div class="error">${escapeHtml(err.message)}</div>`;
+  }
 }
 
+async function loadDesigns() {
+  designSection.classList.remove("hidden");
+  designGrid.innerHTML = "<div class='hint'>Memuat desain...</div>";
 
-// ======================================
-// AMBIL KANDIDAT
-// ======================================
+  try {
+    const res = await fetch(`${API_URL}?action=desain`);
+    const data = await res.json();
 
-async function loadCandidates() {
+    if (!data.success) throw new Error(data.message || "Gagal memuat desain.");
 
-    const container =
-        document.getElementById("candidates");
+    designGrid.innerHTML = data.designs.map(d => `
+      <article class="design-card" data-id="${escapeAttr(d.id)}" data-name="${escapeAttr(d.nama)}">
+        <img class="design-image" src="${escapeAttr(d.gambar)}" alt="${escapeAttr(d.nama)}"
+             onerror="this.src='images/placeholder.svg'">
+        <div class="design-info">
+          <strong>${escapeHtml(d.nama)}</strong>
+          <span>Klik untuk memilih</span>
+        </div>
+      </article>
+    `).join("");
 
-
-    container.innerHTML =
-        "<p>Memuat pilihan...</p>";
-
-
-    try {
-
-        const response = await fetch(
-            API_URL +
-            "?action=candidates"
-        );
-
-
-        const data =
-            await response.json();
-
-
-        if (data.status !== "success") {
-
-            container.innerHTML =
-                "<p>Gagal mengambil pilihan.</p>";
-
-            return;
-        }
-
-
-        container.innerHTML = "";
-
-
-        data.candidates.forEach(candidate => {
-
-            const div =
-                document.createElement("div");
-
-
-            div.className =
-                "candidate";
-
-
-            div.innerHTML = `
-                <div class="candidate-title">
-                    NAMA ANGKATAN #${candidate.id}
-                </div>
-            `;
-
-
-            div.onclick = function () {
-
-                document
-                    .querySelectorAll(".candidate")
-                    .forEach(el => {
-                        el.classList.remove("selected");
-                    });
-
-
-                div.classList.add("selected");
-
-
-                kandidatTerpilih =
-                    candidate.id;
-
-
-                document
-                    .getElementById("voteButton")
-                    .disabled = false;
-            };
-
-
-            container.appendChild(div);
-
-        });
-
-
-    } catch (error) {
-
-        container.innerHTML =
-            "<p>Gagal terhubung ke server.</p>";
-
-        console.error(error);
-
-    }
+    document.querySelectorAll(".design-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".design-card").forEach(x => x.classList.remove("selected"));
+        card.classList.add("selected");
+        selectedDesign = {
+          id: card.dataset.id,
+          nama: card.dataset.name
+        };
+        voteButton.disabled = false;
+      });
+    });
+  } catch (err) {
+    designGrid.innerHTML = `<div class="error">${escapeHtml(err.message)}</div>`;
+  }
 }
 
+voteButton.addEventListener("click", () => {
+  if (!selectedVoter || !selectedDesign) return;
 
-// ======================================
-// KIRIM VOTE
-// ======================================
+  confirmText.textContent =
+    `Kamu akan memilih ${selectedDesign.nama}. Pastikan pilihanmu sudah benar karena suara hanya dapat diberikan satu kali.`;
+  modal.classList.remove("hidden");
+});
 
-async function kirimVote() {
+document.getElementById("cancelButton").addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
 
-    if (!kodePemilih) {
-        return;
-    }
+document.getElementById("confirmButton").addEventListener("click", submitVote);
 
+async function submitVote() {
+  modal.classList.add("hidden");
+  voteButton.disabled = true;
+  message.className = "message";
+  message.textContent = "Mengirim suara...";
 
-    if (!kandidatTerpilih) {
+  // URLSearchParams sengaja dipakai agar tidak memicu CORS preflight.
+  const body = new URLSearchParams({
+    action: "vote",
+    nama: selectedVoter.nama,
+    kelas: selectedVoter.kelas,
+    desain_id: selectedDesign.id
+  });
 
-        alert(
-            "Silakan pilih kandidat terlebih dahulu."
-        );
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body
+    });
 
-        return;
-    }
+    const data = await res.json();
 
+    if (!data.success) throw new Error(data.message || "Gagal menyimpan suara.");
 
-    const nama =
-        document
-            .getElementById("nama")
-            .value
-            .trim();
+    message.className = "message success";
+    message.textContent = "✓ Suara berhasil dicatat. Terima kasih!";
+    nameSearch.disabled = true;
+    designSection.classList.add("hidden");
+    selectedVoterBox.classList.add("hidden");
+    searchResults.innerHTML = "";
+  } catch (err) {
+    message.className = "message error";
+    message.textContent = err.message;
+    voteButton.disabled = false;
+  }
+}
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[c]));
+}
 
-    const yakin =
-        confirm(
-            "Apakah kamu yakin dengan pilihanmu?"
-        );
-
-
-    if (!yakin) {
-        return;
-    }
-
-
-    const button =
-        document.getElementById("voteButton");
-
-
-    const message =
-        document.getElementById("voteMessage");
-
-
-    button.disabled = true;
-
-    button.textContent =
-        "Mengirim...";
-
-
-    try {
-
-        const response =
-            await fetch(API_URL, {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "text/plain;charset=utf-8"
-                },
-
-                body: JSON.stringify({
-
-                    action: "vote",
-
-                    kode: kodePemilih,
-
-                    nama: nama,
-
-                    kandidat_id:
-                        kandidatTerpilih
-
-                })
-
-            });
-
-
-        const data =
-            await response.json();
-
-
-        if (data.status === "success") {
-
-            message.textContent =
-                "✓ Voting berhasil!";
-
-            message.style.color =
-                "green";
-
-
-            button.textContent =
-                "SUDAH VOTING";
-
-
-            document
-                .querySelectorAll(".candidate")
-                .forEach(el => {
-                    el.onclick = null;
-                });
-
-
-        } else {
-
-            message.textContent =
-                data.message;
-
-            button.disabled = false;
-
-            button.textContent =
-                "VOTE";
-
-        }
-
-
-    } catch (error) {
-
-        message.textContent =
-            "Terjadi kesalahan saat mengirim suara.";
-
-        button.disabled = false;
-
-        button.textContent =
-            "VOTE";
-
-        console.error(error);
-
-    }
+function escapeAttr(value) {
+  return escapeHtml(value);
 }
