@@ -1,105 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Voting</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting Desain Kelulusan</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">MUWADAAH</p>
+      <h1>Voting Desain Dekorasi Kelulusan</h1>
+      <p class="subtitle">Cari nama kamu, lalu pilih satu desain yang paling kamu sukai.</p>
+    </header>
 
-    <main class="container">
+    <section class="card">
+      <h2>1. Cari nama kamu</h2>
+      <label for="nameSearch">Nama lengkap</label>
+      <input id="nameSearch" type="text" autocomplete="off"
+             placeholder="Ketik nama kamu..." maxlength="80">
+      <div id="searchResults" class="search-results"></div>
+      <div id="selectedVoter" class="selected-voter hidden"></div>
+    </section>
 
-        <div class="header">
-            <h1>🗳️ Voting</h1>
-            <p>Silakan pilih salah satu pilihan</p>
-        </div>
+    <section id="designSection" class="card hidden">
+      <h2>2. Pilih desain</h2>
+      <p class="hint">Klik salah satu gambar untuk memilih.</p>
+      <div id="designGrid" class="design-grid"></div>
+    </section>
 
+    <button id="voteButton" class="vote-button" disabled>Kirim Pilihan</button>
+    <p id="message" class="message"></p>
 
-        <!-- LOGIN PEMILIH -->
+    <footer>
+      <a href="hasil.html">Hasil voting</a>
+    </footer>
+  </main>
 
-        <section id="loginSection" class="card">
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <h3>Konfirmasi pilihan</h3>
+      <p id="confirmText"></p>
+      <div class="modal-actions">
+        <button id="cancelButton" class="secondary">Batal</button>
+        <button id="confirmButton" class="primary">Ya, Kirim</button>
+      </div>
+    </div>
+  </div>
 
-            <h2>Masuk Voting</h2>
-
-            <p class="description">
-                Masukkan kode pemilih yang telah diberikan.
-            </p>
-
-            <input
-                type="text"
-                id="kode"
-                placeholder="Contoh: VOTE001"
-                autocomplete="off"
-            >
-
-            <button onclick="cekKode()">
-                Mulai Voting
-            </button>
-
-            <p id="loginMessage" class="message"></p>
-
-        </section>
-
-
-        <!-- HALAMAN VOTING -->
-
-        <section id="votingSection" class="hidden">
-
-            <div class="card">
-
-                <h2>Pilih Pilihan</h2>
-
-                <p>
-                    Kode:
-                    <strong id="kodeTampil"></strong>
-                </p>
-
-                <label for="nama">
-                    Nama <span>(opsional)</span>
-                </label>
-
-                <input
-                    type="text"
-                    id="nama"
-                    placeholder="Boleh dikosongkan"
-                    maxlength="100"
-                >
-
-
-                <div id="candidates" class="candidates">
-                    <!-- Kandidat akan dimasukkan melalui JavaScript -->
-                </div>
-
-
-                <button
-                    id="voteButton"
-                    onclick="kirimVote()"
-                    disabled
-                >
-                    VOTE
-                </button>
-
-                <p id="voteMessage" class="message"></p>
-
-            </div>
-
-        </section>
-
-
-        <!-- HASIL -->
-
-        <a href="hasil.html" class="result-link">
-            Lihat Hasil Voting
-        </a>
-
-    </main>
-
-
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
