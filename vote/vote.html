@@ -3,47 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voting Desain Kelulusan</title>
+  <meta name="theme-color" content="#24221c">
+  <title>Voting Desain Kelulusan — Muwadaah</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="grain"></div>
   <main class="container">
     <header class="hero">
-      <p class="eyebrow">MUWADAAH</p>
-      <h1>Voting Desain Dekorasi Kelulusan</h1>
-      <p class="subtitle">Cari nama kamu, lalu pilih satu desain yang paling kamu sukai.</p>
+      <div class="ornament top-mark" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="eyebrow">DHIRASATYA</p>
+      <h1>Voting Desain<br><em>muwadaah</em></h1>
+      <div class="gold-rule" aria-hidden="true"><b></b><span>✦</span><b></b></div>
+      <p class="subtitle">Pilih satu desain yang paling kamu sukai untuk menjadi bagian dari momen kelulusan kita.</p>
     </header>
 
+    <section class="intro-note">
+      <span class="note-number">01</span>
+      <div>
+        <small>LANGKAH PERTAMA</small>
+        <h2>Cari nama kamu</h2>
+        <p>Pastikan memilih nama dan kelas yang benar sebelum melanjutkan.</p>
+      </div>
+    </section>
+
     <section class="card">
-      <h2>1. Cari nama kamu</h2>
       <label for="nameSearch">Nama lengkap</label>
-      <input id="nameSearch" type="text" autocomplete="off"
-             placeholder="Ketik nama kamu..." maxlength="80">
+      <div class="input-frame">
+        <span class="input-icon">⌕</span>
+        <input id="nameSearch" type="text" autocomplete="off"
+               placeholder="Ketik nama kamu..." maxlength="80">
+      </div>
       <div id="searchResults" class="search-results"></div>
       <div id="selectedVoter" class="selected-voter hidden"></div>
     </section>
 
     <section id="designSection" class="card hidden">
-      <h2>2. Pilih desain</h2>
-      <p class="hint">Klik salah satu gambar untuk memilih.</p>
+      <div class="section-heading">
+        <span class="section-kicker">LANGKAH KEDUA</span>
+        <h2>Pilih desain</h2>
+        <p class="hint">Klik salah satu gambar yang paling mewakili pilihanmu.</p>
+      </div>
       <div id="designGrid" class="design-grid"></div>
     </section>
 
-    <button id="voteButton" class="vote-button" disabled>Kirim Pilihan</button>
-    <p id="message" class="message"></p>
+    <div class="vote-area">
+      <div class="ornament mini" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <button id="voteButton" class="vote-button" disabled>Kirim Pilihan <span>→</span></button>
+      <p id="message" class="message"></p>
+    </div>
 
     <footer>
-      <a href="hasil.html">Hasil voting</a>
+      <div class="footer-mark">MUWADAAH 24-27</div>
+      <a href="hasil.html">Lihat hasil voting <span>↗</span></a>
     </footer>
   </main>
 
   <div id="modal" class="modal hidden">
     <div class="modal-box">
-      <h3>Konfirmasi pilihan</h3>
+      <div class="modal-symbol">✦</div>
+      <span class="modal-kicker">KONFIRMASI</span>
+      <h3>Sudah yakin dengan pilihanmu?</h3>
       <p id="confirmText"></p>
       <div class="modal-actions">
-        <button id="cancelButton" class="secondary">Batal</button>
-        <button id="confirmButton" class="primary">Ya, Kirim</button>
+        <button id="cancelButton" class="secondary">Kembali</button>
+        <button id="confirmButton" class="primary">Ya, Kirim →</button>
       </div>
     </div>
   </div>
