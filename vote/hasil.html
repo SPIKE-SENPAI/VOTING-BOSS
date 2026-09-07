@@ -3,22 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hasil Voting</title>
+  <meta name="theme-color" content="#24221c">
+  <title>Hasil Voting — Muwadaah</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
+  <div class="grain"></div>
+  <main class="container results-page">
     <header class="hero">
-      <p class="eyebrow">MUWADAAH</p>
-      <h1>Hasil Voting</h1>
-      <p class="subtitle">Rekap pilihan desain dekorasi.</p>
+      <div class="ornament top-mark" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="eyebrow">DHIRASATYA</p>
+      <h1>Hasil<br><em>Voting</em></h1>
+      <div class="gold-rule" aria-hidden="true"><b></b><span>✦</span><b></b></div>
+      <p class="subtitle">Rekap pilihan desain yang telah masuk.</p>
     </header>
 
-    <section class="card">
+    <section class="intro-note result-intro">
+      <span class="note-number">01</span>
+      <div>
+        <small>REKAP SUARA</small>
+        <h2>Desain pilihan kita</h2>
+        <p>Data ditampilkan berdasarkan suara yang tercatat.</p>
+      </div>
+    </section>
+
+    <section class="card results-card">
       <div id="results" class="results">Memuat hasil...</div>
     </section>
 
     <footer>
+      <div class="footer-mark">MUWADAAH 24-27</div>
       <a href="index.html">← Kembali ke voting</a>
     </footer>
   </main>
@@ -39,16 +53,19 @@
           return;
         }
 
-        box.innerHTML = data.results.map(item => `
+        box.innerHTML = data.results.map((item, index) => `
           <div class="result-row">
-            <div>
-              <strong>${escapeHtml(item.nama)}</strong>
-              <span>${item.suara} suara</span>
+            <div class="result-top">
+              <span class="result-rank">0${index + 1}</span>
+              <div class="result-name">
+                <strong>${escapeHtml(item.nama)}</strong>
+                <span>${item.suara} suara</span>
+              </div>
+              <b>${item.persen}%</b>
             </div>
             <div class="bar-wrap">
               <div class="bar" style="width:${item.persen}%"></div>
             </div>
-            <b>${item.persen}%</b>
           </div>
         `).join("");
       } catch (err) {
