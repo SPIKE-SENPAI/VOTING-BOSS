@@ -44,14 +44,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 
 
 const sectionMembers = {
-  kesekretariatan: ["Anti Diah Utami", "Chatya Nur Annahari", "Fatiah Kirana", "Itsna Mar'atus Sholihah", "Langit Ramadhani Sutrisno Putri", "Sakinah Rafifah  Hasanah", "Siren Khafifah Arrahman", "Yayan", "Zazkia Faustine Hery"],
+  kesekretariatan: ["Anti Diah Utami", "Chatya Nur Annahari", "Fatiah Kirana", "Itsna Mar'atus Sholihah", "Langit Ramadhani Sutrisno Putri", "Sakinah Rafifah  Hasanah", "Siren Khafifah Arrahman", "Yayan", "Zazkia Faustine Hery", "Aldan Maulana", "M. Fatikhurrizki", "M. Cholid Al-Farich", "Faiq Fairussani Noriz", "Rijal Nur Faizin", "Naja Misbahul Munir"],
   pendanaan: ["Nama Anggota 1", "Nama Anggota 2"],
-  dokumentasi: ["Ayu Rahmania", "Fien Sa'adatu Nayla", "Khilyatun Nawa Al-islah", "Lita Aprilia Safitri", "Nabila Khoirunnisa", "Zakkya Maulin"],
-  perlengkapan: ["Agesya Alifatil Chasanah", "Dhini Ramadani", "Dwi Safitri", "Fina Damara Elusia", "Kaffa Nur Mazidah", "Nihayatur Rizqi", "Syarifah Hanun Azzahra"],
-  konsumsi: ["Andin Naila Azkia", "Farikhatussholikhah", "Fathin Farsani", "Faza Nifana Sofa", "Kusuma Diana Hapsari", "Marchelia Novita Sari", "Nawang Lulu Zam Zami"],
-  keamanan: ["Hasna Masfufah", "Hikmatul Illahiyah", "Hilwa Maulidiya Rahmatika", "Khansa Cantika Al-latifah", "Lulu Izatul Ilma", "Nabila Adhwa", "Nur Rizki"],
-  humas: ["Azka Layly Khaq", "Rashifatul Chusna", "Khansa Khairana", "Maghfirotur Rohmah", "Ririn Nopia Lestari", "Salasa Khusna", "Zulfa Diatama"],
-  acara: ["Asyifatun Nur Aini", "Qaisya Nur Aulia", "Risma Isnaini Sholehah", "Syifa' Ajwah Al-madani", "Tara Mei Liana", "Ulya Siana", "Wafa Yuna Nurani"]
+  dokumentasi: ["Ayu Rahmania", "Fien Sa'adatu Nayla", "Khilyatun Nawa Al-islah", "Lita Aprilia Safitri", "Nabila Khoirunnisa", "Zakkya Maulin", "Farid Irsyadi", "M. Ali Mahfuzi", "Fiqh Cahyono", "M. Fatih Izzul Hikam", "Abrisam Abbasi A.", "Wahyu Nur Hidayat"],
+  perlengkapan: ["Agesya Alifatil Chasanah", "Dhini Ramadani", "Dwi Safitri", "Fina Damara Elusia", "Kaffa Nur Mazidah", "Nihayatur Rizqi", "Syarifah Hanun Azzahra", "Masmu'nida", "Razid Adnan Alfarizi", "Alfitrasalam", "Arkan Tsakib", "M.Khusnul Adib M."],
+  konsumsi: ["Andin Naila Azkia", "Farikhatussholikhah", "Fathin Farsani", "Faza Nifana Sofa", "Kusuma Diana Hapsari", "Marchelia Novita Sari", "Nawang Lulu Zam Zami", "M. Budi Musyaffaq", "Ibrahim Nauval Z.", "Gufron Da'i Saputra", "Azzam Almas S. J.", "M. Arfan Alfarizi"],
+  keamanan: ["Hasna Masfufah", "Hikmatul Illahiyah", "Hilwa Maulidiya Rahmatika", "Khansa Cantika Al-latifah", "Lulu Izatul Ilma", "Nabila Adhwa", "Nur Rizki", "Mulkan Zamrotul Fuad", "Jaron Putra Aditya", "Mahaldico Fadhil A.", "M. Zufi Dylan Firdaus", "Ahmad Faiz Al-Ghifari", "M. Mafkhul Khobir", "M. Zakiya Sa'id"],
+  humas: ["Azka Layly Khaq", "Rashifatul Chusna", "Khansa Khairana", "Maghfirotur Rohmah", "Ririn Nopia Lestari", "Salasa Khusna", "Zulfa Diatama", "M. Irhas Anandiawan", "Zidni Ula", "Nazal Faiqoh Wijiatmoko", "Hilmansyah Arrofudin M."],
+  acara: ["Asyifatun Nur Aini", "Qaisya Nur Aulia", "Risma Isnaini Sholehah", "Syifa' Ajwah Al-madani", "Tara Mei Liana", "Ulya Siana", "Wafa Yuna Nurani", "Lintang Akbar Ibrahim", "M. Nur Alim", "Halilintar Putra A.", "M. Mutawakkil Alallah", "M. Syauqilah Yusuf"]
 };
 const memberPopover=document.querySelector("#memberPopover"), memberTitle=document.querySelector("#memberTitle"), memberList=document.querySelector("#memberList");
 const divisionButtons=document.querySelectorAll(".division[data-section]");
