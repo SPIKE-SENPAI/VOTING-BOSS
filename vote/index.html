@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#24221c">
+  <title>Voting Ditutup — Muwadaah</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain"></div>
+  <main class="container winner-page">
+    <header class="hero">
+      <div class="ornament top-mark"><span></span><i>✦</i><span></span></div>
+      <p class="eyebrow">MUWADAAH</p>
+      <h1>Voting Telah<br><em>Ditutup</em></h1>
+      <div class="gold-rule"><b></b><span>✦</span><b></b></div>
+      <p class="subtitle">Terima kasih kepada seluruh peserta yang telah memberikan pilihannya. Saatnya kita melihat desain yang terpilih.</p>
+    </header>
+
+    <section class="winner-intro">
+      <div class="winner-label"><span>01</span><div><small>HASIL AKHIR</small><h2>Desain Pemenang</h2></div></div>
+      <div class="ornament mini"><span></span><i>✦</i><span></span></div>
+    </section>
+
+    <section id="winnerCard" class="winner-card">
+      <div class="winner-image-wrap">
+        <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+        <img id="winnerImage" class="winner-image" src="images/file_0000000038588230ad8e6ad0f3e32782.png" alt="Desain pemenang">
+        <div id="winnerFallback" class="winner-fallback hidden"><span>✦</span><p>Gambar desain tidak tersedia</p></div>
+      </div>
+      <div class="winner-info">
+        <span class="winner-kicker">THE CHOSEN DESIGN</span>
+        <h3 id="winnerName">Memuat pemenang...</h3>
+        <div class="winner-stats">
+          <div><strong id="winnerVotes">—</strong><span>SUARA</span></div>
+          <div class="stat-divider"></div>
+          <div><strong id="winnerPercent">—</strong><span>DARI TOTAL SUARA</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="loading" class="status-box"><span class="loader">✦</span><p>Menyiapkan hasil akhir...</p></section>
+    <section id="errorBox" class="status-box error-box hidden"><span>!</span><p id="errorText">Hasil belum dapat dimuat.</p></section>
+
+    <p class="closing-quote">“Sebuah pilihan telah menjadi bagian<br> dari perjalanan kita.”</p>
+    <footer><div class="footer-mark">MUWADAAH</div><a href="hasil.html">Lihat rekap suara <span>↗</span></a></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
